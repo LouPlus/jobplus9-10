@@ -2,9 +2,75 @@
 
 {% block title %} Home {% endblock %}
 
-{% block body %}
-<div class="jumbotron">
-        <h1>JOBPLUS</h1>
-        <p>领先的网络求职、招聘一站式服务平台</p>
+{% block jumbotron %}
+<div class="jumbotron masthead">
+        <div class="container">
+                <h1>JOBPLUS</h1>
+                <p>领先的网络求职、招聘一站式服务平台</p>
+        </div>
 </div>
+{% endblock %}
+
+{% block body %}
+<ul class="nav nav-tabs list-title">
+        <li role="presentation" class="active">
+                <a href="#">最新发布的职位</a>
+        </li>
+</ul>
+<div class="job-list">
+        {% if data['job'] %}
+        {% for job in data['job'] %}
+        <div class="col-sm-6 col-md-4 job">
+                <div class="job-box">
+                        <div class="caption">
+                                <a href="#">
+                                        <h3 class="job_name">{{job.name}}</h3>
+                                        <p class="job_description">{{job.description}}</p>
+                                        <p class="job_experience_requirement">{{job.experience_requirement}}</p>
+                                </a>
+                        </div>
+                </div>
+                <hr>
+                <div class="media">
+                        <div class="media-left">
+                                <a href="#">
+                                        <img class="media-object" src="#">
+                                </a>
+                        </div>
+                </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+</div>
+<p class="list-more">
+        <a href="#" class="btn btn-success btn-lg list-more-btn">查看更多</a>
+</p>
+<ul class="nav nav-tabs list-title">
+        <li role="presentation" class="active">
+                <a href="#">最新注册的公司</a>
+        </li>
+</ul>
+<div class="company-list">
+        {% if data['company'] %}
+        {% for company in data['company'] %}
+        <div class="col-sm-6 col-md-4 company-item">
+                <div class="thumbnail">
+                        <a href="#">
+                                <img class="company_logo" src="{{company.logo}}">
+                                <h3 class="company_name">{{company.name}}</h3>
+                                <p class="company_description">{{company.description}}</p>
+                        </a>
+                        <a href="#">
+                                <p>在招职位:</p>
+                        </a>
+                </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+</div>
+<p class="list-more">
+        <a href="#" class="btn btn-success btn-lg list-more-btn">查看更多</a>
+</p>
+
+
 {% endblock %}

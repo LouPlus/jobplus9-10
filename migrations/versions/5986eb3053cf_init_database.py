@@ -1,8 +1,8 @@
 """init database
 
-Revision ID: 043c3bd93e5b
+Revision ID: 5986eb3053cf
 Revises: 
-Create Date: 2018-12-21 22:09:43.289904
+Create Date: 2018-12-23 20:12:30.556281
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '043c3bd93e5b'
+revision = '5986eb3053cf'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,14 +39,14 @@ def upgrade():
     sa.Column('updated_tm', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=False),
-    sa.Column('logo', sa.String(length=256), nullable=False),
+    sa.Column('logo', sa.String(length=512), nullable=False),
     sa.Column('site', sa.String(length=64), nullable=False),
     sa.Column('addr', sa.String(length=256), nullable=False),
     sa.Column('email', sa.String(length=64), nullable=False),
-    sa.Column('description', sa.String(length=128), nullable=True),
-    sa.Column('about', sa.String(length=1024), nullable=True),
-    sa.Column('tags', sa.String(length=128), nullable=True),
-    sa.Column('welfares', sa.String(length=256), nullable=True),
+    sa.Column('description', sa.String(length=1024), nullable=True),
+    sa.Column('about', sa.String(length=8192), nullable=True),
+    sa.Column('tags', sa.String(length=1024), nullable=True),
+    sa.Column('welfares', sa.String(length=1024), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ondelete='SET NULL'),
     sa.PrimaryKeyConstraint('id')

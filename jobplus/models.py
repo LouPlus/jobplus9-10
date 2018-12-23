@@ -39,7 +39,7 @@ class User(Base, UserMixin):
 
 	is_disable = db.Column(db.Boolean, default=False) #是否被禁用
 	resume_url = db.Column(db.String(128)) #简历的地址
-	jobs = db.relationship('job', secondary=user_job, backref=db.backref('users')) #与job建立关系
+	jobs = db.relationship('Job', secondary=user_job, backref=db.backref('users')) #与job建立关系
 
 	def __repr__(self):
 		return "<User:{}>".format(self.username)
@@ -70,15 +70,15 @@ class Company(Base):
 
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(128), unique=True, index=True, nullable=False)
-	logo = db.Column(db.String(256), nullable=False)
+	logo = db.Column(db.String(512), nullable=False)
 	site = db.Column(db.String(64), nullable=False)
 	addr = db.Column(db.String(256), nullable=False) #地址
 	email = db.Column(db.String(64), nullable=False)
 
-	description = db.Column(db.String(128)) #公司简介
-	about = db.Column(db.String(1024)) #公司详情描述
-	tags = db.Column(db.String(128)) #公司标签,多个标签以逗号分割
-	welfares = db.Column(db.String(256))
+	description = db.Column(db.String(1024)) #公司简介
+	about = db.Column(db.String(8192)) #公司详情描述
+	tags = db.Column(db.String(1024)) #公司标签,多个标签以逗号分割
+	welfares = db.Column(db.String(1024))
 
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'))
 	user = db.relationship('User', uselist=False, backref=db.backref('company', uselist=False)) #uselist为False表示user和company是一对一的关系
