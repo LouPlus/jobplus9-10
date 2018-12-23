@@ -13,3 +13,5 @@ def index():
     last12jobs = Job.query.order_by(Job.created_tm.desc()).limit(12).all()
 
     return render_template('index.html', data=dict(job=last12jobs, company=last12companies))
+    return render_template('index.html')
+

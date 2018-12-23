@@ -39,6 +39,7 @@ class User(Base, UserMixin):
 
 	is_disable = db.Column(db.Boolean, default=False) #是否被禁用
 	resume_url = db.Column(db.String(128)) #简历的地址
+
 	jobs = db.relationship('Job', secondary=user_job, backref=db.backref('users')) #与job建立关系
 
 	def __repr__(self):
