@@ -77,7 +77,6 @@ class Company(Base):
 	addr = db.Column(db.String(256), nullable=False) #地址
 	email = db.Column(db.String(64), nullable=False)
 
-
 	description = db.Column(db.String(1024)) #公司简介
 	about = db.Column(db.String(8192)) #公司详情描述
 	tags = db.Column(db.String(1024)) #公司标签,多个标签以逗号分割

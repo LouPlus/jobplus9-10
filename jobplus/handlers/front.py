@@ -5,6 +5,7 @@ from jobplus.models import User, Company, Job
 from jobplus.forms import LoginForm
 
 
+
 front = Blueprint('front', __name__)
 
 @front.route('/')
@@ -15,6 +16,7 @@ def index():
 
     return render_template('index.html', data=dict(job=last12jobs, company=last12companies))
     return render_template('index.html')
+
 
 
 @front.route('/login', methods=['GET', 'POST'])
