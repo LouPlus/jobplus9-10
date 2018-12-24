@@ -1,5 +1,6 @@
 class BaseConfig(object):
-    SECRET_KEY = ''
+    ''' os.urandom(24)'''
+    SECRET_KEY = "\xcaW\x9d\xba\xe5\xfb+'\x88aRP\xfd\xc9fHE;\xec\xc9\xdf,\n\x82"
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
