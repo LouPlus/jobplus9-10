@@ -8,8 +8,8 @@ fake_cn = Faker('zh_CN') # 指定本地化区域参数,创建中文伪造数据,
 
 
 def iter_users():
-    '''数据文件里爬取了13个公司的信息, 这里创建13个企业用户'''
-    for i in range(13):
+    '''数据文件里爬取了33个公司的信息, 这里创建33个企业用户'''
+    for i in range(33):
         email = fake_cn.email()
         yield User(
             username = fake.name(),

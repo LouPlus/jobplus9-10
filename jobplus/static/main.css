@@ -1,3 +1,14 @@
 .masthead h1, p {
     text-align: center;
 }
+.form {
+    width: 400px;
+    margin: 0 auto;
+}
+
+a,
+a:visited,
+a:hover {
+    cursor: pointer;
+    text-decoration: none !important;
+}
