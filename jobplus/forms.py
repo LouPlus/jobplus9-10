@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import Length, Email, EqualTo, DataRequired, URL, NumberRange, Regexp
 from jobplus.models import db, User, Company
 
+
 class RegisterForm(FlaskForm):
     pass
 
