@@ -1,8 +1,8 @@
 """init database
 
-Revision ID: f0f0b74abe24
+Revision ID: 07a9366b1f48
 Revises: 
-Create Date: 2018-12-24 19:59:34.244124
+Create Date: 2018-12-27 00:15:18.228525
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f0f0b74abe24'
+revision = '07a9366b1f48'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,7 @@ def upgrade():
     sa.Column('password', sa.String(length=256), nullable=False),
     sa.Column('role', sa.SmallInteger(), nullable=True),
     sa.Column('mobilephone', sa.String(length=11), nullable=True),
+    sa.Column('work_years', sa.SmallInteger(), nullable=True),
     sa.Column('is_disable', sa.Boolean(), nullable=True),
     sa.Column('resume_url', sa.String(length=128), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -57,7 +58,7 @@ def upgrade():
     sa.Column('updated_tm', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=64), nullable=False),
-    sa.Column('description', sa.String(length=256), nullable=True),
+    sa.Column('description', sa.String(length=2048), nullable=True),
     sa.Column('experience_requirement', sa.String(length=32), nullable=True),
     sa.Column('degree_requirement', sa.String(length=32), nullable=True),
     sa.Column('low_salary', sa.Integer(), nullable=False),

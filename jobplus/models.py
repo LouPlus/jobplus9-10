@@ -94,7 +94,7 @@ class Job(Base):
 
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), nullable=False)
-	description = db.Column(db.String(256)) #职位描述
+	description = db.Column(db.String(2048)) #职位描述
 	experience_requirement = db.Column(db.String(32)) #经验要求
 	degree_requirement = db.Column(db.String(32)) #学历要求
 
