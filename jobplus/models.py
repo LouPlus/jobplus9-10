@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask import url_for
-from datetime import datetime
+from datetime import datetime, date
 
 
 db = SQLAlchemy()
@@ -85,6 +85,9 @@ class Company(Base):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'))
 	user = db.relationship('User', uselist=False, backref=db.backref('company', uselist=False)) #uselist为False表示user和company是一对一的关系
 
+	def openjobs(self):
+		return len(self.job)
+
 	def __repr__(self):
 		return '<Company:{}>'.format(self.name)
 
@@ -110,6 +113,10 @@ class Job(Base):
 
 	company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
 	company = db.relationship('Company', uselist=False, backref=db.backref('job', cascade='all, delete-orphan'))
+
+	def calculate_days(self):
+		return (datetime.now().date() - self.updated_tm.date()).days
+
 
 	def __repr__(self):
 		return '<Job:{}>'.format(self.name)

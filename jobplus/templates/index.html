@@ -17,25 +17,38 @@
                 <a href="#">最新发布的职位</a>
         </li>
 </ul>
-<div class="job-list">
+<div class="newest-job-list">
         {% if data['job'] %}
         {% for job in data['job'] %}
-        <div class="col-sm-6 col-md-4 job">
+        <div class="col-sm-6 col-md-4">
                 <div class="job-box">
                         <div class="caption">
                                 <a href="#">
-                                        <h3 class="job_name">{{job.name}}</h3>
-                                        <p class="job_description">{{job.description}}</p>
-                                        <p class="job_experience_requirement">{{job.experience_requirement}}</p>
-                                </a>
+                                        <h4 class="job-name">{{job.name}}</h4>
+                                        <p class="daysince">[{{job.calculate_days()}}天前]</p>
+                                        <p>[{{job.workplace}}]</p>
+                                        <p>{{job.experience_requirement}} {{job.degree_requirement}}</p>
+                                        <span class="text-green">{{job.low_salary}}-{{job.high_salary}}</span>
+                                        {% if job.is_fulltime %}
+                                        <span >全职</span>
+                                        {% else %}
+                                        <span >实习</span>
+                                        {% endif %}
+                                </a>    
                         </div>
-                </div>
-                <hr>
-                <div class="media">
-                        <div class="media-left">
-                                <a href="#">
-                                        <img class="media-object" src="#">
-                                </a>
+                        <hr>
+                        <div class="media">
+                                <div class="media-left">
+                                        <a href="#">
+                                                <img class="media-object" src="{{job.company.logo}}" width="40" height="40">
+                                        </a>
+                                </div>
+                                <div class="meida-body">
+                                        <a href="#">
+                                                <h4 class="media-heading">{{job.company.name}}</h4>
+                                        </a>
+                                        <span class="company-meta">{{job.company.email}}</span>
+                                </div>
                         </div>
                 </div>
         </div>
@@ -50,7 +63,7 @@
                 <a href="#">最新注册的公司</a>
         </li>
 </ul>
-<div class="company-list">
+<div class="newest-company-list">
         {% if data['company'] %}
         {% for company in data['company'] %}
         <div class="col-sm-6 col-md-4 company-item">
@@ -61,7 +74,7 @@
                                 <p class="company_description">{{company.description}}</p>
                         </a>
                         <a href="#">
-                                <p>在招职位:</p>
+                                <p>在招职位:{{company.openjobs()}}</p>
                         </a>
                 </div>
         </div>
