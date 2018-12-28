@@ -14,7 +14,7 @@
 {% block body %}
 <ul class="nav nav-tabs list-title">
         <li role="presentation" class="active">
-                <a href="#">最新发布的职位</a>
+                <h2 class="newest-job-list-title">最新发布的职位</h2>
         </li>
 </ul>
 <div class="newest-job-list">
@@ -24,30 +24,30 @@
                 <div class="job-box">
                         <div class="caption">
                                 <a href="#">
-                                        <h4 class="job-name">{{job.name}}</h4>
-                                        <p class="daysince">[{{job.calculate_days()}}天前]</p>
-                                        <p>[{{job.workplace}}]</p>
-                                        <p>{{job.experience_requirement}} {{job.degree_requirement}}</p>
-                                        <span class="text-green">{{job.low_salary}}-{{job.high_salary}}</span>
-                                        {% if job.is_fulltime %}
-                                        <span >全职</span>
-                                        {% else %}
-                                        <span >实习</span>
-                                        {% endif %}
-                                </a>    
+                                    <h4 class="job-name">{{job.name}}</h4>
+                                </a>
+                                    <p class="daysince">[{{job.calculate_days()}}天前]</p>
+                                    <p class="text-muted">[{{job.workplace}}]</p>
+                                    <p class="text-muted">{{job.experience_requirement}} {{job.degree_requirement}}</p>
+                                    <strong class="text-green">{{job.low_salary}}-{{job.high_salary}}</strong>
+                                    {% if job.is_fulltime %}
+                                    <span class="text-muted">全职</span>
+                                    {% else %}
+                                    <span class="text-muted">实习</span>
+                                    {% endif %}
+                                    
                         </div>
                         <hr>
+                        <!--bootstrap图文混排组件-->
                         <div class="media">
-                                <div class="media-left">
-                                        <a href="#">
-                                                <img class="media-object" src="{{job.company.logo}}" width="40" height="40">
-                                        </a>
-                                </div>
+                                    <a class="pull-left" href="#" >
+                                    <img src="{{job.company.logo}}" width="80">
+                                    </a>
                                 <div class="meida-body">
-                                        <a href="#">
-                                                <h4 class="media-heading">{{job.company.name}}</h4>
-                                        </a>
-                                        <span class="company-meta">{{job.company.email}}</span>
+                                    <a href="#">
+                                        <h4 class="media-heading">{{job.company.name}}</h4>
+                                    </a>
+                                    <p>{{job.company.email}}</p>
                                 </div>
                         </div>
                 </div>
@@ -56,11 +56,11 @@
         {% endif %}
 </div>
 <p class="list-more">
-        <a href="#" class="btn btn-success btn-lg list-more-btn">查看更多</a>
+        <a href="{{url_for('job.index')}}" class="btn btn-success btn-lg list-more-btn">查看更多</a>
 </p>
 <ul class="nav nav-tabs list-title">
         <li role="presentation" class="active">
-                <a href="#">最新注册的公司</a>
+                <h2 class="newest-company-list-title">最新注册的公司</h2>
         </li>
 </ul>
 <div class="newest-company-list">
@@ -82,7 +82,7 @@
         {% endif %}
 </div>
 <p class="list-more">
-        <a href="#" class="btn btn-success btn-lg list-more-btn">查看更多</a>
+        <a href="{{url_for('company.index')}}" class="btn btn-success btn-lg list-more-btn">查看更多</a>
 </p>
 
 

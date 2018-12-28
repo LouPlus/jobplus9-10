@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_pagination, render_job %}
+
+{% block title %}
+职位信息
+{% endblock %}
+
+{% block jumbotron %}
+<div class="jumbotron masthead">
+        <div class="container">
+                <h1>职位过滤</h1>
+        </div>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="job-list">
+	{% for job in pagination.items %}
+	{{render_job(job)}}
+	{% endfor %}
+</div>
+
+{{render_pagination(pagination, 'job.index')}}
+{% endblock %}

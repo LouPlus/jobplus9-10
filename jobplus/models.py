@@ -85,6 +85,7 @@ class Company(Base):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'))
 	user = db.relationship('User', uselist=False, backref=db.backref('company', uselist=False)) #uselist为False表示user和company是一对一的关系
 
+	#获取公司发布的在招职位个数
 	def openjobs(self):
 		return len(self.job)
 
@@ -116,7 +117,6 @@ class Job(Base):
 
 	def calculate_days(self):
 		return (datetime.now().date() - self.updated_tm.date()).days
-
 
 	def __repr__(self):
 		return '<Job:{}>'.format(self.name)
