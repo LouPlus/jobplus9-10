@@ -1,0 +1,70 @@
+{% extends "admin/index.html" %}
+{% from "macros.html" import render_pagination %}
+
+{% block title %}
+Admin - users
+[% endblock %]
+
+{% block admin %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>邮箱</th>
+			<th>用户类型</th>
+			<th>姓名</th>
+			<th>状态(禁用/启用)</th>
+			<th>手机号</th>
+			<th>企业名称</th>
+			<th>企业网站</th>
+			<th>工作年限</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for user in pagination.items %}
+		<tr>
+			<td>{{user.id}}</td>
+			<td>{{user.email}}</td>
+			<td>
+				{% if user.is_company %}企业用户
+                {% else %}求职者
+                {% endif %}
+			</td>
+            <td>{{user.username}}</td>
+            <td>{% if not user.is_disable %}启用{% else %}禁用 {% endif %}</td>
+            <td>{{user.mobilephone}}</td>
+            <td>{% if user.is_company %}{{user.company.name}}{% endif %}</td>
+            <td>{% if user.is_company %}{{user.company.site}}{% endif %}</td>
+            <td>{% if not user.is_company %}{{user.work_years}}{% endif %}</td>
+			<td>
+                {% if not user.is_disable %}
+				<div class="btn-group" role="group">
+					<a href="#" type="button" class="btn btn-default" title="编辑">
+						<span class="glyphicon glyphicon-pencil" title="编辑" aria-hidden="true"></span>
+					</a>
+					<a href="#" type="button" class="btn btn-default" title="删除">
+						<span class="glyphicon glyphicon-pencil" title="删除" aria-hidden="true"></span>
+					</a>
+				</div>
+                {% else %}
+                <div class="btn-group" role="group">
+                    <a href="#" type="button" class="btn btn-default" title="启用">
+                        <span class="glyphicon glyphicon-ok" title="启用" aria-hidden="true"></span>
+                    </a>
+                </div>
+                {% endif %}
+			</td>
+		</tr>
+	</tbody>
+</table>
+{{render_pagination(paginatio, 'admin.users')}}
+{% endblock %}
+
+{% block operation %}
+<a href="#" type="button" class="btn btn-primary">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true">添加求职者</span>
+</a>
+<a href="#" type="button" class="btn btn-primary">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true">添加企业用户</span>
+</a>
+{% endblock %}
