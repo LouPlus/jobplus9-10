@@ -16,12 +16,15 @@ def create_app(config):
 
 
 def register_blueprints(app):
+
 	from .handlers import front, user, company, job, admin
+
 	app.register_blueprint(front)
 	app.register_blueprint(user)
 	app.register_blueprint(company)
 	app.register_blueprint(job)
 	app.register_blueprint(admin)
+
 
 
 def register_extensions(app):
