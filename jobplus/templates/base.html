@@ -9,7 +9,7 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-fixed-top navbar-inverse">
+        <nav class="navbar navbar-inverse">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -28,7 +28,7 @@
                     <li class="{% if active == 'job' %}active{% endif %}"><a href="{{url_for('job.index')}}">职位</a></li>
                     <li class="{% if active == 'company' %}active{% endif %}"><a href="{{url_for('company.index')}}">公司</a></li>
                     {% if current_user.is_authenticated and current_user.is_admin %}
-                    <li><a href="#">控制台</a></li>
+                    <li class="{% if active == 'admin' %}active{% endif %}"><a href="{{url_for('admin.index')}}">控制台</a></li>
                     {% endif %}
         
                 </ul>

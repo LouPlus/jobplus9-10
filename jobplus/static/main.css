@@ -11,6 +11,7 @@ a:visited,
 a:hover {
     cursor: pointer;
     text-decoration: none !important;
+}
 
 h4,
 .job-name,
@@ -25,7 +26,6 @@ h4,
 .company-item img {
     height: 120px !important;
 }
-
 
 .newest-job-list,
 .newest-company-list {

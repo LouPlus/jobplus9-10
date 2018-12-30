@@ -6,7 +6,28 @@ from jobplus.models import db, User, Company
 
 
 class RegisterForm(FlaskForm):
-    pass
+    username = StringField('用户名', validators=[DataRequired('请输入用户名'), Length(3,64)])
+    email = StringField('邮箱', validators=[DataRequired('请输入邮箱'), Email(message="邮箱格式不正确!")])
+    password = PasswordField('密码', validators=[DataRequired('请输入密码'), Length(6,64)])
+    repeat_password = PasswordField('重复密码', validators=[DataRequired('请重复输入密码'), EqualTo('password', message='两次输入的密码不相同')])
+    submit = SubmitField('提交')
+
+    def validate_username(self, field):
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('用户名已经存在')
+
+    def validate_email(self, field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('邮箱已经存在')
+
+    def create_user(self, is_company=False):
+        if not is_company:
+            user = User(username=self.username.data, email=self.email.data, password=self.password.data)
+        else:
+            user = User(username=self.username.data, email=self.email.data, password=self.password.data, role=User.ROLE_COMPANY)
+        db.session.add(user)
+        db.session.commit()
+        return user
 
 
 class LoginForm(FlaskForm):
@@ -30,7 +51,7 @@ class UserProfileForm(FlaskForm):
     password = PasswordField('密码(不填写保持不变)')
     mobilephone = StringField('手机号码', validators=[DataRequired('请输入手机号码'), Regexp('1[345789][0-9]{9}',message='手机号码格式不正确!')])
     work_years = IntegerField('工作年限', validators=[NumberRange(min=0, message='无效的工作年限')])
-    resume_url = StringField('简历地址', validators=[URL('无效的URL地址')])
+    resume_url = StringField('简历地址', validators=[URL(message='无效的URL地址')])
     submit = SubmitField('提交')
 
     def update_profile(self, user):
@@ -44,10 +65,11 @@ class UserProfileForm(FlaskForm):
         db.session.add(user)
         db.session.commit()
 
+
 class CompanyProfileForm(FlaskForm):
     name = StringField('企业名称')
     logo = StringField('Logo')
-    site = StringField('公司网址', validators=[DataRequired(),URL('无效的URL地址')])
+    site = StringField('公司网址', validators=[DataRequired(),URL(message='无效的URL地址')])
     addr = StringField('公司地址', validators=[DataRequired()])
     email = StringField('邮箱', validators=[DataRequired('请输入邮箱'), Email(message='邮箱格式不正确!')])
     description = TextAreaField('公司简介') #公司简介

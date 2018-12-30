@@ -7,6 +7,7 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root@localhost:3306/jobplus?charset=utf8'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     COUNTS_PER_PAGE = 9
+    ADMIN_PER_PAGE = 10
 
 class ProductionConfig(BaseConfig):
     pass

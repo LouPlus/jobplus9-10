@@ -67,6 +67,7 @@ class User(Base, UserMixin):
 	def is_admin(self):
 		return self.role == self.ROLE_ADMIN
 
+
 class Company(Base):
 	__tablename__ = 'company'
 
