@@ -3,7 +3,7 @@
 
 {% block title %}
 Admin - users
-[% endblock %]
+{% endblock %}
 
 {% block admin %}
 <table class="table">
@@ -13,7 +13,6 @@ Admin - users
 			<th>邮箱</th>
 			<th>用户类型</th>
 			<th>姓名</th>
-			<th>状态(禁用/启用)</th>
 			<th>手机号</th>
 			<th>企业名称</th>
 			<th>企业网站</th>
@@ -31,40 +30,43 @@ Admin - users
                 {% endif %}
 			</td>
             <td>{{user.username}}</td>
-            <td>{% if not user.is_disable %}启用{% else %}禁用 {% endif %}</td>
             <td>{{user.mobilephone}}</td>
             <td>{% if user.is_company %}{{user.company.name}}{% endif %}</td>
             <td>{% if user.is_company %}{{user.company.site}}{% endif %}</td>
             <td>{% if not user.is_company %}{{user.work_years}}{% endif %}</td>
 			<td>
-                {% if not user.is_disable %}
+              
 				<div class="btn-group" role="group">
-					<a href="#" type="button" class="btn btn-default" title="编辑">
+					<a href="{{url_for('admin.edituser', user_id=user.id)}}" type="button" class="btn btn-default" title="编辑">
 						<span class="glyphicon glyphicon-pencil" title="编辑" aria-hidden="true"></span>
 					</a>
-					<a href="#" type="button" class="btn btn-default" title="删除">
-						<span class="glyphicon glyphicon-pencil" title="删除" aria-hidden="true"></span>
-					</a>
-				</div>
-                {% else %}
-                <div class="btn-group" role="group">
-                    <a href="#" type="button" class="btn btn-default" title="启用">
+					{% if user.is_disable %}
+                    <a href="{{url_for('admin.disableuser', user_id=user.id)}}" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-ok" title="启用" aria-hidden="true"></span>
                     </a>
+                    {% else %}
+                    <a href="{{url_for('admin.disableuser', user_id=user.id)}}" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-off" title="禁用" aria-hidden="true"></span>
+                    </a>
+                    {% endif %}
                 </div>
-                {% endif %}
+ 
 			</td>
 		</tr>
+		{% endfor %}
 	</tbody>
 </table>
-{{render_pagination(paginatio, 'admin.users')}}
+{{render_pagination(pagination, 'admin.users')}}
 {% endblock %}
 
 {% block operation %}
-<a href="#" type="button" class="btn btn-primary">
-	<span class="glyphicon glyphicon-plus" aria-hidden="true">添加求职者</span>
+<!--bootstrap垂直排列按钮-->
+<div class="btn-group-vertical" role="group" aria-label="operation">
+<a href="{{url_for('admin.adduser')}}" type="button" class="btn btn-primary">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true">添加求职者用户</span>
 </a>
-<a href="#" type="button" class="btn btn-primary">
+<a href="{{url_for('admin.addcompany')}}" type="button" class="btn btn-primary">
 	<span class="glyphicon glyphicon-plus" aria-hidden="true">添加企业用户</span>
 </a>
+</div>
 {% endblock %}
