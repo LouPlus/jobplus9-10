@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask import flash, redirect, url_for, request, current_app
 from flask_login import login_user, logout_user, login_required
 from jobplus.models import User, Company, Job
-from jobplus.forms import LoginForm
+from jobplus.forms import LoginForm, RegisterForm
 
 
 
@@ -15,7 +15,6 @@ def index():
     last12jobs = Job.query.order_by(Job.created_tm.desc()).limit(12).all()
 
     return render_template('index.html', data=dict(job=last12jobs, company=last12companies))
-    return render_template('index.html')
 
 
 
@@ -43,3 +42,21 @@ def logout():
     logout_user()
     flash('你已经退出登录', 'success')
     return redirect(url_for('.index'))
+
+@front.route('/userregister', methods=['GET','POST'])
+def user_register():
+    form =  RegisterForm()
+    if form.validate_on_submit():
+        form.create_user() #默认创建普通求职者用户
+        flash('求职者用户注册成功,请登录!', 'success')
+        return redirect(url_for('.login'))
+    return render_template('user_register.html', form=form)
+
+@front.route('/companyregister', methods=['GET','POST'])
+def company_register():
+    form =  RegisterForm()
+    if form.validate_on_submit():
+        form.create_user(True) #企业用户创建时需要为role送入ROLE_COMPANY
+        flash('企业用户注册成功,请登录!', 'success')
+        return redirect(url_for('.login'))
+    return render_template('company_register.html', form=form)

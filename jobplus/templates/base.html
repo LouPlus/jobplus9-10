@@ -34,8 +34,8 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if not current_user.is_authenticated %}
-                    <li><a href="#">用户注册</a></li>
-                    <li><a href="#">企业注册</a></li>
+                    <li><a href="{{url_for('front.user_register')}}">用户注册</a></li>
+                    <li><a href="{{url_for('front.company_register')}}">企业注册</a></li>
                     <li><a href="{{url_for('front.login')}}">登录</a></li>
                     {% else %}
                     <li class="dropdown">
