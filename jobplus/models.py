@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from flask import url_for
 from datetime import datetime, date
 
@@ -87,8 +87,17 @@ class Company(Base):
 	user = db.relationship('User', uselist=False, backref=db.backref('company', uselist=False)) #uselist为False表示user和company是一对一的关系
 
 	#获取公司发布的在招职位个数
+	@property
 	def openjobs(self):
 		return len(self.job)
+
+	@property
+	def taglist(self):
+		return self.tags.split(',')
+
+	@property
+	def url(self):
+		return url_for('company.company_detail', company_id=self.id)
 
 	def __repr__(self):
 		return '<Company:{}>'.format(self.name)
@@ -116,8 +125,26 @@ class Job(Base):
 	company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
 	company = db.relationship('Company', uselist=False, backref=db.backref('job', cascade='all, delete-orphan'))
 
+	@property
 	def calculate_days(self):
 		return (datetime.now().date() - self.updated_tm.date()).days
+
+	@property
+	def taglist(self):
+		return self.tags.split(',')
+
+	@property
+	def url(self):
+		return url_for('job.job_detail', job_id=self.id)
+
+	@property
+	def current_user_is_deliveried(self):
+		r = Delivery.query.filter_by(job_id=self.id, user_id=current_user.id).first()
+		return r is not None
+
+	@property
+	def getjobdesc(self):
+		return self.description.split('#')
 
 	def __repr__(self):
 		return '<Job:{}>'.format(self.name)

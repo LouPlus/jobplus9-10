@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% from "macros.html" import render_job, render_company %}
 
-{% block title %} Home {% endblock %}
+{% block title %} {{super()}} {% endblock %}
 
 {% block jumbotron %}
 <div class="jumbotron masthead">
@@ -20,38 +21,7 @@
 <div class="newest-job-list">
         {% if data['job'] %}
         {% for job in data['job'] %}
-        <div class="col-sm-6 col-md-4">
-                <div class="job-box">
-                        <div class="caption">
-                                <a href="#">
-                                    <h4 class="job-name">{{job.name}}</h4>
-                                </a>
-                                    <p class="daysince">[{{job.calculate_days()}}天前]</p>
-                                    <p class="text-muted">[{{job.workplace}}]</p>
-                                    <p class="text-muted">{{job.experience_requirement}} {{job.degree_requirement}}</p>
-                                    <strong class="text-green">{{job.low_salary}}-{{job.high_salary}}</strong>
-                                    {% if job.is_fulltime %}
-                                    <span class="text-muted">全职</span>
-                                    {% else %}
-                                    <span class="text-muted">实习</span>
-                                    {% endif %}
-                                    
-                        </div>
-                        <hr>
-                        <!--bootstrap图文混排组件-->
-                        <div class="media">
-                                    <a class="pull-left" href="#" >
-                                    <img src="{{job.company.logo}}" width="80">
-                                    </a>
-                                <div class="meida-body">
-                                    <a href="#">
-                                        <h4 class="media-heading">{{job.company.name}}</h4>
-                                    </a>
-                                    <p>{{job.company.email}}</p>
-                                </div>
-                        </div>
-                </div>
-        </div>
+        {{render_job(job)}}
         {% endfor %}
         {% endif %}
 </div>
@@ -66,18 +36,7 @@
 <div class="newest-company-list">
         {% if data['company'] %}
         {% for company in data['company'] %}
-        <div class="col-sm-6 col-md-4 company-item">
-                <div class="thumbnail">
-                        <a href="#">
-                                <img class="company_logo" src="{{company.logo}}">
-                                <h3 class="company_name">{{company.name}}</h3>
-                                <p class="company_description">{{company.description}}</p>
-                        </a>
-                        <a href="#">
-                                <p>在招职位:{{company.openjobs()}}</p>
-                        </a>
-                </div>
-        </div>
+        {{render_company(company)}}
         {% endfor %}
         {% endif %}
 </div>

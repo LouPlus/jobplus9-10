@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{company.name}} - {{super()}}
+{% endblock %}
+
+{% block head_css %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='company.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="company-detail_base">
+	<div class="container">
+		<div class="row mt30 mb30">
+			<div class="col-md-3 col-sm-3">
+				<div class="img-warp">
+					<img src="{{company.logo}}" height="">
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-9">
+				<div class="company-name">
+					<h2>{{company.name}}</h2>
+					<p class="company-desc ellipsis text-muted">{{company.description}}</p>
+					<ul class="list-inline ml0 mb0">
+						{% for tag in company.taglist %}
+						<li>{{tag}}</li>
+						{% endfor %}
+					</ul>
+					<div>
+						<a href="{{company.site}}">{{company.site}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="company-detail_menu">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+			<ul class="nav nav-pills nav-tabs-company-detail">
+				<li role="presentation"><a href="{{company.url}}">企业主页</a></li>
+				<li role="presentation"><a href="#">招聘职位</a></li>
+			</ul>
+		</div>
+		</div>
+	</div>
+</div>
+<div class="company-detail_detail">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="company-detail_mod">
+				<div class="company-detail-mod-heading">
+					<h4>关于我们</h4>
+				</div>
+				<div class="company-detail-mod-content">
+					<div class="mt30 fmt">
+					<p>{{company.about}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="company-detail_mod">
+				<div class="company-detail-mod-heading">
+					<h4>特色福利</h4>
+				</div>
+				<div class="company-detail-mod-content">
+					<div class="mt30 fmt">
+					<p>{{company.welfares}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="company-detail_mod">
+				<div class="company-detail-mod-heading">
+					<h4>工作地点</h4>
+				</div>
+				<div class="company-detail-mod-content">
+					<p>{{company.addr}}</p>
+					<p>{{company.email}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}
