@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{job.name}} - {{job.company.name}} - {{super()}}
+{% endblock %}
+
+{% block body %}
+<div class="past-topheader">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-xs-12">
+				<div class="job-detail__company-logo">
+					<a href="{{job.company.url}}">
+						<img src="{{job.company.logo}}" height="100">
+					</a>
+				</div>
+				<div  class="job-detail__job-info">
+					<h3 class="post-topheader__info-title">{{job.name}}</h3>
+					<ul class="job-detail__requirements">
+						<li class="salary">
+							<span>{{job.low_salary}}</span>-<span>{{job.high_salary}}</span>
+						</li>
+						<li>{{job.degree_requirement}}</li>
+						<li>{{job.workplace}}</li>
+						<li>{{job.experience_requirement}}</li>
+						<li>{% if job.is_fulltime %}全职{% else %}实习{% endif %}</li>
+					</ul>
+					<ul class="taglist--inline" mb0>
+						{% for tag in job.taglist %}
+						<li>{{tag}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="job-detail_func-item">
+					{% if current_user.is_authenticated %}
+					{% if not job.current_user_is_deliveried %}
+					<a href="{{url_for('job.delivery', job_id=job.id)}}" class="btn btn-success dilivery-bnt">投简历</a>
+					<span class="glyphicon glyphicon-hand-left" title="快速投递" aria-hidden="true"></span>
+					<span class="job-detail_func_desc">快速投递</span>
+					{% else %}
+					<a href="#" class="btn btn-success dilivery-btn" disabled="disabled">已投递</a>
+					{% endif %}
+					{% endif %}
+				</div>
+				<div class="job-detail_func-item">
+					<span class="job-detail_func_desc">
+					<strong>{{job.view_count}}</strong> 浏览
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container job-detail_detail">
+<div class="row">
+	<div class="col-md-8 main">
+		<div class="fmt">
+			<h4 class="job-detail_heading-catalog">职位信息</h4>
+			{% for jobdesc in job.getjobdesc %}
+			<p>{{jobdesc}}</p>
+			{% endfor %}
+		</div>
+		<p class="mt20 text-muted">发布于 {{job.calculate_days}} 天前</p>
+		<div class="bg-gray job-detail_foot">
+			<div class="row">
+				<div class="col-md-6">
+					{% if current_user.is_authenticated %}
+					{% if not job.current_user_is_deliveried %}
+					<a href="{{url_for('job.delivery', job_id=job.id)}}" class="btn btn-primary btn-lg dilivery-btn">投个简历</a>
+					<span class="glyphicon glyphicon-hand-left" title="快速投递" aria-hidden="true"></span>
+					<span>感兴趣?快速投递</span>
+					{% else %}
+					<a href="#" class="btn btn-success dilivery-btn" disabled="disabled">已投递</a>
+					{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 main">
+		<div class="job-detail_company-info mb30">
+			<div class="job-detail_logo-side">
+				<a href="{{job.company.url}}" target="_blank">
+					<img img src="{{job.company.logo}}">
+				</a>
+			</div>
+			<div class="job-detail_company-info-warp">
+				<h3 class="job-detail_company-info-name">{{job.company.name}}</h3>
+				<p class="job-detail_company-info-desc">{{job.company.description}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}

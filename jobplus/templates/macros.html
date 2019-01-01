@@ -52,10 +52,10 @@
 <div class="col-sm-6 col-md-4">
         <div class="job-box">
                 <div class="caption">
-                        <a href="#">
+                        <a href="{{job.url}}" target="_blank">
                                 <h4 class="job-name">{{job.name}}</h4>
                         </a>
-                                <p class="daysince">[{{job.calculate_days()}}天前]</p>
+                                <p class="daysince">[{{job.calculate_days}}天前]</p>
                                 <p class="text-muted">[{{job.workplace}}]</p>
                                 <p class="text-muted">{{job.experience_requirement}} {{job.degree_requirement}}</p>
                                 <strong class="text-green">{{job.low_salary}}-{{job.high_salary}}</strong>
@@ -88,13 +88,13 @@
 {% macro render_company(company) %}
 <div class="col-sm-6 col-md-4 company-item">
         <div class="thumbnail">
-                <a href="#">
+                <a href="{{company.url}}" target="_blank">
                         <img class="company_logo" src="{{company.logo}}">
                         <h3 class="company_name">{{company.name}}</h3>
                         <p class="company_description">{{company.description}}</p>
                 </a>
                 <a href="#">
-                        <p>在招职位:{{company.openjobs()}}</p>
+                        <p>在招职位:{{company.openjobs}}</p>
                 </a>
         </div>
 </div>

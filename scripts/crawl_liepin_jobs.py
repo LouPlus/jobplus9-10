@@ -1,4 +1,5 @@
 import scrapy
+import re
 
 class CompanySpider(scrapy.Spider):
     name = 'jobs'
@@ -206,9 +207,12 @@ class CompanySpider(scrapy.Spider):
     ]
 
     def parse(self, response):
+        #用'#'连接,方便后面解析
+        desc = '#'.join(response.xpath('.//div[contains(@class,"job-description")]/div/text()').extract()).strip()
+        desc = re.sub(r'\s','',desc) #去除字符串中的whitespace
         yield  {
             'name': response.xpath('.//div[@class="title-info"]/h1/text()').extract_first(),
-            'description': ''.join(response.xpath('.//div[contains(@class,"job-description")]/div/text()').extract()).strip(),
+            'description': desc,
             'experience_requirement': response.xpath('.//div[@class="job-qualifications"]/span[1]/text()').extract_first().strip(),
             'degree_requirement': response.xpath('.//div[@class="job-qualifications"]/span[2]/text()').extract_first().strip(),
             'workplace': response.xpath('.//div[@class="job-title-left"]/p[@class="basic-infor"]/span/a/text()').extract_first().strip()
