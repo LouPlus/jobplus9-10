@@ -11,7 +11,8 @@ job = Blueprint('job', __name__, url_prefix='/job')
 @job.route('/')
 def index():
 	page = request.args.get('page', default=1, type=int)
-	pagination = Job.query.order_by(Job.created_tm.desc()).paginate(
+	# flask-sqlalchemy布尔型字段的过滤语法
+	pagination = Job.query.filter(Job.is_open.is_(True)).order_by(Job.created_tm.desc()).paginate(
 		page = page,
 		per_page = current_app.config['COUNTS_PER_PAGE'],
 		error_out = False
@@ -55,17 +56,31 @@ def enablejob(job_id):
 		db.session.commit()
 		flash('该职位上线成功!','success')
 
-        # 管理员和企业用户都可以上线下线职位,但是操作成功后返回的页面是不一样的
+    # 管理员和企业用户都可以上线下线职位,但是操作成功后返回的页面是不一样的
 	if current_user.is_admin:
 		return redirect(url_for('admin.jobs'))
 	else:
 		redirect(url_for('company.admin_index', company_id=job.company.id))
 
 
-@job.route('/<int:job_id>/enable')
+@job.route('/<int:job_id>/disable')
 @login_required
 def disablejob(job_id):
-	pass
+	job = Job.query.get_or_404(job_id)
+	if not job.is_open:
+		flash('该职位已下线!','warning')
+	else:
+		job.is_open = False
+		db.session.add(job)
+		db.session.commit()
+		flash('该职位下线成功!','success')
+
+    # 管理员和企业用户都可以上线下线职位,但是操作成功后返回的页面是不一样的
+	if current_user.is_admin:
+		return redirect(url_for('admin.jobs'))
+	else:
+		redirect(url_for('company.admin_index', company_id=job.company.id))
+
 
 @job.route('/job/new')
 @login_required

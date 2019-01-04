@@ -82,5 +82,5 @@ def jobs():
 		per_page = current_app.config['ADMIN_PER_PAGE'],
 		error_out = False
 	)
-	return render_template('admin/jobss.html', pagination=pagination)
+	return render_template('admin/jobs.html', pagination=pagination)
 

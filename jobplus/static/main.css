@@ -75,6 +75,7 @@ h4,
 }
 .nav-pagination {
     text-align: center;
+    clear: both; /*清除两侧的浮动元素,不加若浮动元素所在行有空间则分页条会上浮*/
 }
 .past-topheader {
     padding: 15px 0 0 0;

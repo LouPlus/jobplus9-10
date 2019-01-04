@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% from "macros.html" import render_pagination, render_job %}
 
 {% block title %}
-{{company.name}} - {{super()}}
+招聘职位信息-{{company.name}}
 {% endblock %}
 
 {% block head_css %}
@@ -42,50 +43,27 @@
 			<div class="col-sm-6">
 			<ul class="nav nav-pills nav-tabs-company-detail">
 				<li role="presentation"><a href="{{company.url}}">企业主页</a></li>
-				<li role="presentation"><a href="{{url_for('company.company_openjobs',company_id=company.id)}}">招聘职位</a></li>
+				<li class="active" role="presentation"><a href="{{url_for('company.company_openjobs',company_id=company.id)}}">招聘职位</a></li>
 			</ul>
 		</div>
 		</div>
 	</div>
 </div>
-<div class="company-detail_detail">
-	<div class="row">
-		<div class="col-md-9">
-			<div class="company-detail_mod">
-				<div class="company-detail-mod-heading">
-					<h4>关于我们</h4>
-				</div>
-				<div class="company-detail-mod-content">
-					<div class="mt30 fmt">
-					<p>{{company.about}}</p>
-					</div>
-				</div>
-			</div>
-			<div class="company-detail_mod">
-				<div class="company-detail-mod-heading">
-					<h4>特色福利</h4>
-				</div>
-				<div class="company-detail-mod-content">
-					<div class="mt30 fmt">
-					<p>{{company.welfares}}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="company-detail_mod">
-				<div class="company-detail-mod-heading">
-					<h4>工作地点</h4>
-				</div>
-				<div class="company-detail-mod-content">
-					<p>{{company.addr}}</p>
-					<p>{{company.email}}</p>
-				</div>
-			</div>
-		</div>
+
+<div class="row company-openjobs">
+	<div class="list-group">
+		{% for job in company.job %}
+        {% if job.is_open %} <!--不展示企业已下线职位-->
+		<a class="list-group-item" href="{{job.url}}">
+			<span class="badge">{{job.view_count}}</span>
+			<span style="margin-right:5em; display:inline-block">{{job.name}}</span>
+			<span style="color:#009a61;margin-right:5em; display:inline-block">{{job.low_salary}}-{{job.high_salary}}</span>
+			<span style="margin-right:5em; display:inline-block">{{job.workplace}}</span>
+		</a>
+		{% endif %}
+		{% endfor %}
 	</div>
 </div>
-
 
 
 {% endblock %}

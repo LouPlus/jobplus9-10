@@ -33,4 +33,9 @@ def profile():
 @company.route('/<int:company_id>')
 def company_detail(company_id):
     company = Company.query.get_or_404(company_id)
-    return render_template('company/detail.html', company=company, active='')
+    return render_template('company/detail.html', company=company)
+
+@company.route('/<int:company_id>/openjobs')
+def company_openjobs(company_id):
+    company = Company.query.get_or_404(company_id)
+    return render_template('company/openjobs.html', company=company)
