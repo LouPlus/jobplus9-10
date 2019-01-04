@@ -1,9 +1,10 @@
-{% extends "admin/index.html" %}
+{% extends "company/admin_base.html" %}
 {% from "macros.html" import render_pagination %}
 
 {% block title %}
-Admin - jobs
+职位管理-{{company.name}}
 {% endblock %}
+
 
 {% block admin %}
 <table class="table">
@@ -30,37 +31,35 @@ Admin - jobs
             <td>{% if job.is_open %}上线{% else %}下线{% endif %}</td>
 			<td>
 				<div class="btn-group" role="group">
-					<a href="{{url_for('admin.editjob', job_id=job.id)}}" type="button" class="btn btn-default" title="编辑">
-						<span class="glyphicon glyphicon-pencil" title="编辑" aria-hidden="true"></span>
-					</a>
-					<a href="{{url_for('admin.deljob', job_id=job.id)}}" type="button" class="btn btn-default" title="删除">
-						<span class="glyphicon glyphicon-trash" title="删除" aria-hidden="true"></span>
-					</a>
 					{% if job.is_open %}
-                    <a href="{{url_for('admin.disablejob', job_id=job.id)}}" type="button" class="btn btn-default">
+                    <a href="{{url_for('job.disablejob', job_id=job.id)}}" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-off" title="下线" aria-hidden="true"></span>
                     </a>
                     {% else %}
-                    <a href="{{url_for('admin.enablejob', job_id=job.id)}}" type="button" class="btn btn-default">
+                    <a href="{{url_for('job.enablejob', job_id=job.id)}}" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-ok" title="上线" aria-hidden="true"></span>
                     </a>
                     {% endif %}
+                    <a href="{{url_for('company.admin_editjob', company_id=job.company_id)}}" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil" title="编辑" aria-hidden="true"></span>
+                    </a>
+                    <a href="{{url_for('company.admin_deljob', company_id=job.company_id)}}" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash" title="删除" aria-hidden="true"></span>
+                    </a>
                 </div>
 			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
-{{render_pagination(pagination, 'admin.jobs')}}
+{{render_pagination(pagination, 'company.admin_index')}}
 {% endblock %}
 
 {% block operation %}
 <!--bootstrap垂直排列按钮-->
-{% if current_user.is_company %}
 <div class="btn-group-vertical" role="group" aria-label="operation">
-<a href="{{url_for('admin.addjob')}}" type="button" class="btn btn-primary">
+<a href="{{url_for('company.admin_addjob', company_id=company.id)}}" type="button" class="btn btn-primary">
 	<span class="glyphicon glyphicon-plus" aria-hidden="true">添加职位</span>
 </a>
 </div>
-{% endif %}
 {% endblock %}

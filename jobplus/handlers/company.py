@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask import request, current_app
-from jobplus.models import Company
+from jobplus.models import Company, Job
 from flask_login import login_required, current_user
 from jobplus.forms import CompanyProfileForm
+from jobplus.decorators import company_required
 
 company = Blueprint('company', __name__, url_prefix='/company')
 
@@ -39,3 +40,35 @@ def company_detail(company_id):
 def company_openjobs(company_id):
     company = Company.query.get_or_404(company_id)
     return render_template('company/openjobs.html', company=company)
+
+@company.route('/<int:company_id>/admin')
+@company_required
+def admin_index(company_id):
+    company = Company.query.get_or_404(company_id)
+    page = request.args.get('page', default=1, type=int)
+    pagination = Job.query.filter_by(company_id=company.id).paginate(
+        page = page,
+        per_page = current_app.config['COUNTS_PER_PAGE'],
+        error_out = False
+    )
+    return render_template('company/admin_index.html', pagination=pagination, company=company)
+
+@company.route('/<int:company_id>/admin')
+@company_required
+def admin_addjob(company_id):
+    pass
+
+@company.route('/<int:company_id>/admin')
+@company_required
+def admin_editjob(company_id):
+    pass
+
+@company.route('/<int:company_id>/admin')
+@company_required
+def admin_deljob(company_id):
+    pass
+
+@company.route('/<int:company_id>/admin')
+@company_required
+def admin_delivery(company_id):
+    pass

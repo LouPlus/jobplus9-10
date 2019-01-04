@@ -60,7 +60,7 @@ def enablejob(job_id):
 	if current_user.is_admin:
 		return redirect(url_for('admin.jobs'))
 	else:
-		redirect(url_for('company.admin_index', company_id=job.company.id))
+		return redirect(url_for('company.admin_index', company_id=job.company.id))
 
 
 @job.route('/<int:job_id>/disable')
@@ -79,7 +79,7 @@ def disablejob(job_id):
 	if current_user.is_admin:
 		return redirect(url_for('admin.jobs'))
 	else:
-		redirect(url_for('company.admin_index', company_id=job.company.id))
+		return redirect(url_for('company.admin_index', company_id=job.company.id))
 
 
 @job.route('/job/new')
