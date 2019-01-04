@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, abort
 from flask import flash, redirect, url_for, request, current_app
 from jobplus.models import Job, Delivery, db
 from flask_login import login_required, current_user
-from jobplus.decorators import company_required
 import re
 
 

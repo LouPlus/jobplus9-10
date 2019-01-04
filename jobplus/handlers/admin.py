@@ -72,7 +72,6 @@ def disableuser(user_id):
 	db.session.commit()
 	return redirect(url_for('admin.users'))
 
-
 @admin.route('/jobs')
 @admin_required
 def jobs():
@@ -83,4 +82,3 @@ def jobs():
 		error_out = False
 	)
 	return render_template('admin/jobs.html', pagination=pagination)
-
