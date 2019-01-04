@@ -75,6 +75,102 @@ h4,
 }
 .nav-pagination {
     text-align: center;
+    clear: both; /*清除两侧的浮动元素,不加若浮动元素所在行有空间则分页条会上浮*/
+}
+.past-topheader {
+    padding: 15px 0 0 0;
+}
+
+.job-detail__company-logo {
+    float: left;
+    height: 110px;
+    border: 1px solid #dddddd;
+    margin-right: 40px;
+}
+.job-detail__company-logo img {
+    width: 100%;
+    border: 6px solid #ffffff;
+}
+
+.post-topheader__info-title {
+    margin: 0 0 10px 0;
+    line-height: 1.2;
+}
+h3 {
+    font-size: 24px;
+}
+.job-detail__requirements {
+    list-style: none;
+    padding: 0;
+}
+.job-detail__requirements .salary {
+    color: #f5a623;
+}
+.job-detail__requirements li {
+    display: inline-block;
+    margin-right: 20px;
+    color: #666;
+}
+.taglist--inline>li {
+    display: inline-block;
+    margin-right: 5px;
+}
+.job-detail_func-item {
+    margin-bottom: 10px;
+}
+.job-detail_func-item .btn {
+    margin-right: 10px;
+}
+.job-detail_func_desc {
+    color: #999;
+}
+.job-detail_func_desc strong {
+    color: #333;
+}
+.main {
+    margin-top: 30px !important;
+}
+.fmt {
+    line-height: 1.6;
+}
+.fmt h4 {
+    font-size: 1.25em;
+    line-height: 1em;
+    margin: 1.5em 0;
+}
+.job-detail_heading-catalog {
+    color: #d0021b;
+}
+.job-detail_foot {
+    margin-top: 30px;
+    padding: 15px;
+    background: #f6f6f6;
+}
+.job-detail_company-info {
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.job-detail_logo-side {
+    background: #f6f6f6;
+    border-bottom: 1px solid #dddddd;
+    height: 128px;
+    position: relative;
+}
+.job-detail_logo-side img {
+    width: 100%;
+    border: 6px solid #ffffff;
+    vertical-align: middle;
+}
+.job-detail_company-info-warp {
+    padding: 10px;
+}
+.job-detail_company-info-name {
+    margin-top: 20px;
+    text-align: center;
+}
+.job-detail_company-info-desc {
+    color: #666;
 }
 .past-topheader {
     padding: 15px 0 0 0;
