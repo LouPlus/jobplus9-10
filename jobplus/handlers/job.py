@@ -33,10 +33,7 @@ def delivery(job_id):
 	if job.current_user_is_deliveried:
 		flash('该职位已投递!','warning')
 	else:
-		d = Delivery(
-			job_id=job.id,
-			user_id=current_user.id
-		)
+		d = Delivery(job_id=job.id, user_id=current_user.id, company_id=job.company_id)
 		db.session.add(d)
 		db.session.commit()
 		flash('投递成功', 'success')
@@ -59,7 +56,7 @@ def enablejob(job_id):
 	if current_user.is_admin:
 		return redirect(url_for('admin.jobs'))
 	else:
-		redirect(url_for('company.admin_index', company_id=job.company.id))
+		return redirect(url_for('company.admin_index', company_id=job.company.id))
 
 
 @job.route('/<int:job_id>/disable')
@@ -78,10 +75,4 @@ def disablejob(job_id):
 	if current_user.is_admin:
 		return redirect(url_for('admin.jobs'))
 	else:
-		redirect(url_for('company.admin_index', company_id=job.company.id))
-
-
-@job.route('/job/new')
-@login_required
-def addjob():
-	pass
+		return redirect(url_for('company.admin_index', company_id=job.company.id))

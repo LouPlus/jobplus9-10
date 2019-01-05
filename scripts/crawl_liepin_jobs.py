@@ -213,7 +213,7 @@ class CompanySpider(scrapy.Spider):
         yield  {
             'name': response.xpath('.//div[@class="title-info"]/h1/text()').extract_first(),
             'description': desc,
-            'experience_requirement': response.xpath('.//div[@class="job-qualifications"]/span[1]/text()').extract_first().strip(),
-            'degree_requirement': response.xpath('.//div[@class="job-qualifications"]/span[2]/text()').extract_first().strip(),
+            'experience_requirement': response.xpath('.//div[@class="job-qualifications"]/span[2]/text()').extract_first().strip(),
+            'degree_requirement': response.xpath('.//div[@class="job-qualifications"]/span[1]/text()').extract_first().strip(),
             'workplace': response.xpath('.//div[@class="job-title-left"]/p[@class="basic-infor"]/span/a/text()').extract_first().strip()
             }

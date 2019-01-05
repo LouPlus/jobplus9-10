@@ -30,6 +30,9 @@
                     {% if current_user.is_authenticated and current_user.is_admin %}
                     <li class="{% if active == 'admin' %}active{% endif %}"><a href="{{url_for('admin.index')}}">控制台</a></li>
                     {% endif %}
+                    {% if current_user.is_authenticated and current_user.is_company %}
+                    <li><a href="{{url_for('company.admin_index', company_id=current_user.company.id)}}">管理</a></li>
+                    {% endif %}
         
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

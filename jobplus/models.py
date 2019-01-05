@@ -161,6 +161,17 @@ class Delivery(Base):
 	id = db.Column(db.Integer, primary_key=True)
 	job_id = db.Column(db.Integer, db.ForeignKey('job.id', ondelete='SET NULL'))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'))
+	company_id = db.Column(db.Integer) #方便过滤某一个企业的投递简历
 	status = db.Column(db.SmallInteger, default=STATUS_CHECKING)
 
 	response = db.Column(db.String(256)) #企业拒绝时的回复
+
+        # 方便模板内获取投递的用户信息
+	@property
+	def user(self):
+		return User.query.get(self.user_id)
+
+        # 方便模板内获取投递的职位信息
+	@property
+	def job(self):
+		return Job.query.get(self.job_id)

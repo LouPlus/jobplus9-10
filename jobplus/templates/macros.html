@@ -99,3 +99,26 @@
         </div>
 </div>
 {% endmacro %}
+
+<!--渲染公司职位管理中的职位分页展示,与render_pagination宏不同的是这里额外增加了一个参数company_id,这是因为render_pagination宏只能渲染endpoint路由中不带参数的,如/job?page=1,如果路由中带参数如/company/1/admin?page=1,路由中的1就是公司的id参数,这种情况用url_for生成分页路由时需额外送入company_id参数,否则会报错-->
+{% macro render_companyadmin(pagination, endpoint, company_id) %}
+<nav class="nav-pagination" aria-label="Page navigation">
+    <ul class="pagination">
+        <li {% if not pagination.has_prev %} class="disable" {% endif %}><a href="{{url_for(endpoint, company_id=company_id, page=pagination.prev_num) if pagination.has_prev else '#'}}">&laquo;</a></li>
+        {% for page in pagination.iter_pages() %}
+        {% if page %}
+        {% if page != pagination.page %}
+        <li><a href="{{url_for(endpoint, company_id=company_id, page=page)}}">{{page}}</a></li>
+        {% else %}
+        <!--当前页设置为选中状态-->
+        <li class="active"><a href="#">{{page}}<span class="sr-only">(current)</span></a></li>
+        {% endif %}
+        {% else %}
+        <li><span class="ellipsis">...</span></li>
+        {% endif %}
+        {% endfor %}
+        
+        <li {% if not pagination.has_next %} class="disable" {% endif %}><a href="{{url_for(endpoint, company_id=company_id, page=pagination.next_num) if pagination.has_next else '#'}}">&raquo;</a></li>
+    </ul>
+</nav>
+{% endmacro %}
