@@ -16,6 +16,7 @@
 			<th>求职者邮箱</th>
 			<th>求职者电话</th>
 			<th>简历</th>
+			<th>简历状态</th>
 			<th>投递时间</th>
 		</tr>
 	</thead>
@@ -28,19 +29,14 @@
 			<td>{{delivery.user.email}}</td>
 			<td>{{delivery.user.mobilephone}}</td>
 			<td>{{delivery.user.resume_url}}</td>
+            {% if delivery.status == 1 %}
+			<td>审核中</td>
+            {% elif delivery.status == 2 %}
+			<td>已拒绝</td>
+            {% else %}
+			<td>待面试</td>
+            {% endif %}
             <td>{{delivery.created_tm}}</td>
-            {% if status == 'checking' %}
-			<td>
-				<div class="btn-group" role="group">	
-                    <a href="{{url_for('company.admin_delivery_refuse', company_id=delivery.company_id, delivery_id=delivery.id)}}" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-thumbs-down" title="不合适" aria-hidden="true"></span>
-                    </a>
-                    <a href="{{url_for('company.admin_delivery_accept', company_id=delivery.company_id, delivery_id=delivery.id)}}" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-thumbs-up" title="面试" aria-hidden="true"></span>
-                    </a>
-                </div>
-			</td>
-			{% endif %}
 		</tr>
 		{% endfor %}
 	</tbody>

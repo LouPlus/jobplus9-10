@@ -87,6 +87,18 @@ def admin_deljob(company_id,job_id):
     flash('职位信息删除成功', 'success')
     return redirect(url_for('.admin_index', company_id=company_id))
 
+@company.route('/<int:company_id>/admin/apply/index')
+@company_required
+def admin_delivery_index(company_id):
+    company = Company.query.get_or_404(company_id)
+    page = request.args.get('page', default=1, type=int)
+    pagination = Delivery.query.filter_by(company_id=company_id).order_by(Delivery.created_tm.desc()).paginate(
+        page = page,
+        per_page = current_app.config['COUNTS_PER_PAGE'],
+        error_out = False
+    )
+    return render_template('company/admin_delivery_index.html', pagination=pagination, company=company)
+
 @company.route('/<int:company_id>/admin/apply')
 @company_required
 def admin_delivery(company_id):
