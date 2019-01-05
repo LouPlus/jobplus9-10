@@ -1,5 +1,5 @@
 {% extends "company/admin_base.html" %}
-{% from "macros.html" import render_pagination %}
+{% from "macros.html" import render_companyadmin %}
 
 {% block title %}
 职位管理-{{company.name}}
@@ -40,10 +40,10 @@
                         <span class="glyphicon glyphicon-ok" title="上线" aria-hidden="true"></span>
                     </a>
                     {% endif %}
-                    <a href="{{url_for('company.admin_editjob', company_id=job.company_id)}}" type="button" class="btn btn-default">
+                    <a href="{{url_for('company.admin_editjob', company_id=job.company_id, job_id=job.id)}}" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-pencil" title="编辑" aria-hidden="true"></span>
                     </a>
-                    <a href="{{url_for('company.admin_deljob', company_id=job.company_id)}}" type="button" class="btn btn-default">
+                    <a href="{{url_for('company.admin_deljob', company_id=job.company_id, job_id=job.id)}}" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-trash" title="删除" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -52,7 +52,7 @@
 		{% endfor %}
 	</tbody>
 </table>
-{{render_pagination(pagination, 'company.admin_index')}}
+{{render_companyadmin(pagination, 'company.admin_index', company_id=company.id)}}
 {% endblock %}
 
 {% block operation %}

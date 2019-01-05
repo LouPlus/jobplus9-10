@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import ValidationError, TextAreaField, IntegerField
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import Length, Email, EqualTo, DataRequired, URL, NumberRange, Regexp
-from jobplus.models import db, User, Company
+from jobplus.models import db, User, Company, Job
 
 
 class RegisterForm(FlaskForm):
@@ -88,3 +88,35 @@ class CompanyProfileForm(FlaskForm):
         db.session.add(user)
         db.session.add(company)
         db.session.commit()
+
+class JobForm(FlaskForm):
+    name = StringField('职位名称',validators=[DataRequired()])
+    low_salary = IntegerField('最低工资', validators=[DataRequired(), NumberRange(min=100, message='无效的最低工资')])
+    high_salary = IntegerField('最高工资', validators=[DataRequired(), NumberRange(min=100, message='无效的最高工资')])
+    workplace = StringField('工作地点',validators=[DataRequired()])
+    tags = StringField('职位标签,多个标签以逗号分割',validators=[DataRequired()]) #公司标签,多个标签以逗号分割
+    experience_requirement = SelectField('经验要求(年)',
+        choices=[
+        ('经验不限','经验不限'),('1年以上','1年以上'),('2年以上','2年以上'),('3年以上','3年以上'),('1到3年','1到3年'),('3到5年','3到5年'),('5年以上','5年以上')
+        ])
+    degree_requirement = SelectField('学历要求',
+        choices=[('学历不限','学历不限'),('专科','专科以上'),('本科','本科以上'),('硕士','硕士以上'),('博士','博士'),]
+        )
+    description = TextAreaField('职位描述', validators=[Length(0,2018)])
+    is_fulltime = BooleanField('是否全职')
+    submit = SubmitField('发布')
+
+    def create_job(self, company): #创建职位时需要传递公司信息
+        job = Job()
+        self.populate_obj(job)
+        job.company_id = company.id
+        db.session.add(job)
+        db.session.commit()
+        return job
+
+    def update_job(self, job):
+        self.populate_obj(job) #用传递进来的job信息填充表单进行展示
+        db.session.add(job)
+        db.session.commit()
+        return job
+        
