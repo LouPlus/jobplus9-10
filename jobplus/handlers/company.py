@@ -41,7 +41,6 @@ def company_openjobs(company_id):
     company = Company.query.get_or_404(company_id)
     return render_template('company/openjobs.html', company=company)
 
-
 @company.route('/<int:company_id>/admin')
 @company_required
 def admin_index(company_id):

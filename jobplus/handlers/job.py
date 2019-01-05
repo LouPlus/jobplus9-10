@@ -76,9 +76,3 @@ def disablejob(job_id):
 		return redirect(url_for('admin.jobs'))
 	else:
 		return redirect(url_for('company.admin_index', company_id=job.company.id))
-
-
-@job.route('/job/new')
-@login_required
-def addjob():
-	pass
