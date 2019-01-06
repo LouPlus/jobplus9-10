@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_pagination, render_job %}
+
+{% block title %}
+个人主页-{{user.username}}
+{% endblock %}
+
+
+{% block body %}
+<div>
+	<ul class="nav nav-pills">
+		<li role="presentation"><a href="#">投递简历</a></li>
+	</ul>
+</div>
+<div>
+<table class="table">
+	<thead>
+		<tr>
+			<th>职位名称</th>
+			<th>工作地点</th>
+			<th>薪资范围</th>
+			<th>公司名称</th>
+			<th>投递时间</th>
+			<th>投递状态</th>
+			<th>投递回复</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for delivery in deliverys %}
+		<tr>
+			<td>{{delivery.job.name}}</td>
+			<td>{{delivery.job.workplace}}</td>
+            <td>{{delivery.job.low_salary}}-{{delivery.job.high_salary}}</td>
+			<td>{{delivery.job.company.name}}</td>
+            <td>{{delivery.created_tm}}</td>
+            <td>{% if delivery.status == delivery.STATUS_CHECKING %}审核中
+                {% elif delivery.status == delivery.STATUS_REFUSE %}已拒绝
+                {% else %}待面试
+                {% endif %}
+            </td>
+            <td>{% if delivery.status == delivery.STATUS_REFUSE and delivery.response %}{{delivery.response}}{% endif %}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+
+
+{% endblock %}

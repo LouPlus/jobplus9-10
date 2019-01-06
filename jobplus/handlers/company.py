@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for
 from flask import request, current_app
 from jobplus.models import db, Company, Job, Delivery
 from flask_login import login_required, current_user
-from jobplus.forms import CompanyProfileForm, JobForm
+from jobplus.forms import CompanyProfileForm, JobForm, RefuseReason
 from jobplus.decorators import company_required
 
 company = Blueprint('company', __name__, url_prefix='/company')
@@ -124,17 +124,21 @@ def admin_delivery(company_id):
 def admin_delivery_accept(company_id, delivery_id):
     delivery = Delivery.query.get_or_404(delivery_id)
     delivery.status = Delivery.STATUS_ACCEPT
+    status = 'checking'
     db.session.add(delivery)
     db.session.commit()
     flash('简历已审核,请联系面试', 'success')
-    return redirect(url_for('company.admin_delivery', company_id=company_id))
+    return redirect(url_for('company.admin_delivery', company_id=company_id, status=status))
 
-@company.route('/<int:company_id>/admin/apply/<int:delivery_id>/refuse')
+@company.route('/<int:company_id>/admin/apply/<int:delivery_id>/refuse', methods=['GET','POST'])
 @company_required
 def admin_delivery_refuse(company_id, delivery_id):
+    company = Company.query.get_or_404(company_id)
     delivery = Delivery.query.get_or_404(delivery_id)
-    delivery.status = Delivery.STATUS_REFUSE
-    db.session.add(delivery)
-    db.session.commit()
-    flash('简历已拒绝', 'success')
-    return redirect(url_for('company.admin_delivery', company_id=company_id))
+    status = 'checking'
+    form = RefuseReason()
+    if form.validate_on_submit():
+        form.update(delivery)
+        flash('拒绝原因提交成功', 'success')
+        return redirect(url_for('company.admin_delivery', company_id=company_id, status=status))
+    return render_template('company/admin_delivery_refusereason.html', form=form, company=company, delivery=delivery)
