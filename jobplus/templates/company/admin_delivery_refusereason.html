@@ -1,0 +1,14 @@
+{% extends "company/admin_base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block title %}
+简历管理-{{delivery.job.name}}-{{company.name}}
+{% endblock %}
+
+
+{% block admin %}
+<div class="form">
+    <h2>简历拒绝信息</h2>
+    {{render_form(form, url_for('company.admin_delivery_refuse', company_id=company.id, delivery_id=delivery.id))}}
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import ValidationError, TextAreaField, IntegerField
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import Length, Email, EqualTo, DataRequired, URL, NumberRange, Regexp
-from jobplus.models import db, User, Company, Job
+from jobplus.models import db, User, Company, Job, Delivery
 
 
 class RegisterForm(FlaskForm):
@@ -120,3 +120,13 @@ class JobForm(FlaskForm):
         db.session.commit()
         return job
         
+class RefuseReason(FlaskForm):
+    reason = StringField('拒绝原因',validators=[DataRequired(), Length(5,256)])
+    submit = SubmitField('提交')
+
+    def update(self, delivery):
+        delivery.status = Delivery.STATUS_REFUSE
+        delivery.response = self.reason.data
+        db.session.add(delivery)
+        db.session.commit()
+        return delivery
